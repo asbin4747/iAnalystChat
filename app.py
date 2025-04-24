@@ -4,15 +4,22 @@ from sqlalchemy import or_
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 import nltk
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('averaged_perceptron_tagger_eng')
+# nltk.download('punkt')
+# nltk.download('punkt_tab')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('averaged_perceptron_tagger_eng')
 import os
 
+# Configure NLTK data paths correctly for PythonAnywhere
 nltk_data_path = os.path.join(os.path.expanduser("~"), "nltk_data")
-if os.path.exists(nltk_data_path):
-    nltk.data.path.append(nltk_data_path)
+os.makedirs(nltk_data_path, exist_ok=True)
+nltk.data.path.append(nltk_data_path)
+
+# Replace the current download calls with conditional downloads
+if not os.path.exists(os.path.join(nltk_data_path, "tokenizers/punkt")):
+    nltk.download('punkt', download_dir=nltk_data_path)
+if not os.path.exists(os.path.join(nltk_data_path, "taggers/averaged_perceptron_tagger")):
+    nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_path)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
