@@ -8,6 +8,11 @@ nltk.download('punkt')
 nltk.download('punkt_tab')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('averaged_perceptron_tagger_eng')
+import os
+
+nltk_data_path = os.path.join(os.path.expanduser("~"), "nltk_data")
+if os.path.exists(nltk_data_path):
+    nltk.data.path.append(nltk_data_path)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -155,4 +160,4 @@ if __name__ == '__main__':
         db.create_all()  
         if AnalysisData.query.count() == 0:
             populate_dummy_data()
-    app.run(debug=True)
+    app.run()
